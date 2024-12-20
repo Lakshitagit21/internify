@@ -20,7 +20,7 @@ class _DrawErState extends State<DrawEr> {
         children: [
           const DrawerHeader(
             child: Icon(
-              Icons.favorite,
+              Icons.diversity_3,
               size: 64,
             ),
           ),

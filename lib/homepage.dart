@@ -34,93 +34,76 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black, size: 35.0),
       ),
-      //drawer
       drawer: const DrawEr(),
-
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 35,
-          ),
-          //discover a new path
-          const Padding(
-            padding: EdgeInsets.only(left: 25.0),
-            child: Text(
-              'Discover a new Path',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 26,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 35),
+            // Discover a new path
+            const Padding(
+              padding: EdgeInsets.only(left: 25.0),
+              child: Text(
+                'Discover a new Path',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26,
+                ),
               ),
             ),
-          ),
-
-          const SizedBox(
-            height: 35,
-          ),
-
-          //search bar
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.white),
-                    ),
-                    child: const TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Search for an internship..',
-                        prefixIcon: Icon(Icons.search),
+            const SizedBox(height: 35),
+            // Search bar
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.white),
+                      ),
+                      child: const TextField(
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Search for an internship..',
+                          prefixIcon: Icon(Icons.search),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                GestureDetector(
-                  onTap: () {
-                    // Add logic here.
-                  },
-                  child: const Icon(
-                    Icons.filter_list,
-                    size: 35,
+                  const SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: () {
+                      // Add logic here.
+                    },
+                    child: const Icon(
+                      Icons.filter_list,
+                      size: 35,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-
-          //for you job
-
-          const SizedBox(
-            height: 35,
-          ),
-
-          const Padding(
-            padding: EdgeInsets.only(left: 25.0),
-            child: Text(
-              'For You',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 26,
+                ],
               ),
             ),
-          ),
-
-          const SizedBox(
-            height: 35,
-          ),
-
-          // ignore: sized_box_for_whitespace
-
-          Container(
-            height: 160,
-            child: ListView.builder(
+            const SizedBox(height: 35),
+            // For You
+            const Padding(
+              padding: EdgeInsets.only(left: 25.0),
+              child: Text(
+                'For You',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26,
+                ),
+              ),
+            ),
+            const SizedBox(height: 35),
+            // Horizontal job cards
+            SizedBox(
+              height: 160,
+              child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: jobsForYou.length,
                 itemBuilder: (context, index) {
@@ -130,44 +113,41 @@ class _HomePageState extends State<HomePage> {
                     logo: jobsForYou[index][2],
                     hourlyRate: jobsForYou[index][3],
                   );
-                }),
-          ),
-
-          //recently added job tiles
-          const SizedBox(
-            height: 50,
-          ),
-
-          const Padding(
-            padding: EdgeInsets.only(left: 25.0),
-            child: Text(
-              'Recently Added',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 26,
+                },
               ),
             ),
-          ),
-
-          const SizedBox(
-            height: 50,
-          ),
-
-          Expanded(
-              child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: ListView.builder(
+            const SizedBox(height: 50),
+            // Recently Added
+            const Padding(
+              padding: EdgeInsets.only(left: 25.0),
+              child: Text(
+                'Recently Added',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26,
+                ),
+              ),
+            ),
+            const SizedBox(height: 50),
+            // Recently added jobs
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
                 itemCount: recentJobs.length,
-                itemBuilder: ((context, index) {
+                itemBuilder: (context, index) {
                   return RecentJobCard(
                     companyName: recentJobs[index][0],
                     jobTitle: recentJobs[index][1],
                     logo: recentJobs[index][2],
                     hourlyRate: recentJobs[index][3],
                   );
-                })),
-          ))
-        ],
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
