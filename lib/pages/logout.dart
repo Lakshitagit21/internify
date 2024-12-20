@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../homepage.dart';
+
 class LogOut extends StatefulWidget {
   const LogOut({super.key});
 
@@ -101,6 +103,13 @@ class _LogOutState extends State<LogOut> {
                 const SizedBox(height: 25),
                 //sign in
                 GestureDetector(
+                  onTap: () {
+                    // Navigate to homepage after Sign In
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  },
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
                     child: Container(
