@@ -12,6 +12,7 @@ dependencies:
   firebase_core: ^3.9.0
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.2
   image_picker: ^1.1.2
   provider: ^6.1.2
 
@@ -19,6 +20,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "lib/icons/app_icon.png"
 
 flutter:
   uses-material-design: true

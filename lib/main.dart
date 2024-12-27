@@ -1,10 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:internify/homepage.dart';
 import 'package:internify/pages/logout.dart';
 import 'package:internify/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(
     ChangeNotifierProvider(
       create: (context) =>ThemeProvider(),

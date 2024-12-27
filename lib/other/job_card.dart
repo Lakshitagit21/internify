@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'job_detail_page.dart';
+
 class JobCard extends StatelessWidget {
   final String companyName;
   final String jobTitle;
@@ -16,6 +18,23 @@ class JobCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 25.0),
+    child: GestureDetector(
+    onTap: () {
+    // Navigate to the job detail page when the card is tapped
+    Navigator.push(
+    context,
+      MaterialPageRoute(
+        builder: (context) => JobDetailPage(
+          jobTitle: jobTitle,
+          companyName: companyName,
+          location: 'Location', // Replace with actual location
+          jobDescription: 'Job Description', // Replace with actual description
+          salary: '\$$hourlyRate/hr', // Replace with actual salary
+          skills: 'Skill 1, Skill 2', // Replace with actual skills
+        ),
+      ),
+    );
+    },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Container(
@@ -64,6 +83,7 @@ class JobCard extends StatelessWidget {
           ),
         ),
       ),
+    ),
     );
   }
 }

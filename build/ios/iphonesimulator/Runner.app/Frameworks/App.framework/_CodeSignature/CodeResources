@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		fEFitOoBYVN4HPX5YHUCMvi0Qdo=
+		7fgI3mOvU+PA3xysYpI3ZlmTzzE=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		bFHZA9x7S1odAicQ2ASFqFAbjTc=
+		8R2gPq0D3DfE43KLfeFZUCCMYWE=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		R5MMqB5Ixv4NGL+C+tiwHc5Jge4=
+		ueQKcesnWURbhNQoyoD94ojS4WQ=
 		</data>
 		<key>flutter_assets/fonts/MaterialIcons-Regular.otf</key>
 		<data>
@@ -34,11 +34,15 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		HMh5ywJ7uZKXhUMrcfK5yjm/aSA=
+		qxfD+WnmYE9NaaWkbYC3PbELYK4=
 		</data>
 		<key>flutter_assets/lib/icons/.DS_Store</key>
 		<data>
 		E5Glvvlq9twHW1UkUvaHpYDiyTM=
+		</data>
+		<key>flutter_assets/lib/icons/app_icon.png</key>
+		<data>
+		/ZSW+18ZPB5Nlz2AvSvShczpJcA=
 		</data>
 		<key>flutter_assets/lib/icons/apple.png</key>
 		<data>
@@ -71,14 +75,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			6b9E4QJi+0Z8GtekxZTg0ykLl2hhjwxgSx/MCDIEZcA=
+			9MJ1zXfZSj/4WlCJ537YW6TTcPrZZVVXILVScdVGXlc=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			POMgPnkgt0wXqnR5SPd9FVy4s4x2KGhPmk3o/RY6tmE=
+			MPEZ7qzXXeOi7/8I7zlyi6j175pBLh7vxs+WPufif5A=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -92,7 +96,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			jVi1AE5N8siOWvAEOs/IXQSar8lVGeCE3lmKbwPacpk=
+			JPjN4kViNjI8vsXca4kGUmj7CIr4uc2kndqlFXW6bJA=
 			</data>
 		</dict>
 		<key>flutter_assets/fonts/MaterialIcons-Regular.otf</key>
@@ -113,7 +117,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			yZxEblaDKik1PXw9Gyy1idLY7opjbpR7YH8xpvgNkWY=
+			EajHQUCVvbKQdiv99DOGwln4vKnckbWIUIfn2KafRKE=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/icons/app_icon.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			5RrzAiXI9bZPO0kajk5jugLUadxt/+wWAfrM7ZlQaCQ=
 			</data>
 		</dict>
 		<key>flutter_assets/lib/icons/apple.png</key>

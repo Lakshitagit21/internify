@@ -16,6 +16,7 @@ class _PostJobPageState extends State<PostJobPage> {
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _jobDescriptionController = TextEditingController();
   final TextEditingController _salaryController = TextEditingController();
+  final TextEditingController _skillsController = TextEditingController();
   File? _image; // Store the selected image file
   final ImagePicker _picker = ImagePicker();
 
@@ -128,6 +129,12 @@ class _PostJobPageState extends State<PostJobPage> {
               label: 'Salary/Pay',
               icon: Icons.attach_money,
             ),
+            const SizedBox(height: 20),
+            _buildTextField(
+              controller: _skillsController,
+              label: 'Skills needed (comma-separated)',
+              icon: Icons.list_alt,
+            ),
             const SizedBox(height: 35),
             // Save Button
             Center(
@@ -143,7 +150,7 @@ class _PostJobPageState extends State<PostJobPage> {
                   ),
                 ),
                 child: const Text(
-                  'Save Profile',
+                  'Post Job',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),

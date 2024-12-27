@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "158944908834",
+    "project_id": "internify-ffa49",
+    "storage_bucket": "internify-ffa49.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158944908834:android:7d8d0920b0eb29a3201c7b",
+        "android_client_info": {
+          "package_name": "com.example.internify"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSxYAB-GmcwUNkFO-TA61xTtDLcS4oYrw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
