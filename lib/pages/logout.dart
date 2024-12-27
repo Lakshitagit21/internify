@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:internify/pages/register_page.dart';
 
 import '../homepage.dart';
 
@@ -13,7 +14,7 @@ class _LogOutState extends State<LogOut> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 224, 224, 224),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -47,7 +48,7 @@ class _LogOutState extends State<LogOut> {
                   child: Container(
                     height: 60,
                     decoration: BoxDecoration(
-                      color: Colors.grey[200],
+                      color: Theme.of(context).colorScheme.secondary,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.white),
                     ),
@@ -67,7 +68,7 @@ class _LogOutState extends State<LogOut> {
                   child: Container(
                     height: 60,
                     decoration: BoxDecoration(
-                      color: Colors.grey[200],
+                      color: Theme.of(context).colorScheme.secondary,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.white),
                     ),
@@ -188,24 +189,33 @@ class _LogOutState extends State<LogOut> {
                 //not a member ? register now
                 const SizedBox(height: 30),
             
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Not a member?',
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromRGBO(97, 97, 97, 1),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
-                    Text(
-                      'Register now',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.blue,
+                    GestureDetector(
+                      onTap: () {
+                        // Navigate to homepage after Sign In
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => RegisterPage()),
+                        );
+                      },
+                      child: const Text(
+                        'Register now',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.blue,
+                        ),
                       ),
                     ),
                   ],

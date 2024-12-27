@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:internify/pages/const.dart';
+import 'package:internify/pages/post_job.dart';
 
 import 'other/job_card.dart';
 import 'other/recent_job_cards.dart';
@@ -23,16 +24,35 @@ class _HomePageState extends State<HomePage> {
     ['Google', 'Flutter Dev', 'lib/icons/google.png', 75],
     ['Apple', 'Software Eng.', 'lib/icons/apple.png', 95],
     ['Uber', 'UI Designer', 'lib/icons/uber.png', 45],
+    ['Nike', 'UI/UX', 'lib/icons/nike.png', 20],
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.grey[300],
+        backgroundColor:Theme.of(context).colorScheme.surface,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black, size: 35.0),
+        iconTheme:  IconThemeData(color: Theme.of(context).colorScheme.inversePrimary, size: 35.0),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: IconButton(
+              icon: Icon(
+                Icons.add, // Plus icon
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
+              iconSize: 35.0,
+              onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const PostJobPage()),
+                  );
+              },
+            ),
+          ),
+        ],
       ),
       drawer: const DrawEr(),
       body: SingleChildScrollView(
@@ -61,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Colors.grey[200],
+                        color: Theme.of(context).colorScheme.secondary,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: Colors.white),
                       ),
@@ -116,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 30),
             // Recently Added
             const Padding(
               padding: EdgeInsets.only(left: 25.0),
@@ -128,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 30),
             // Recently added jobs
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),

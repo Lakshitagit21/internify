@@ -21,7 +21,7 @@ class JobCard extends StatelessWidget {
         child: Container(
           width: 220,
           padding: const EdgeInsets.all(12),
-          color: Colors.grey[200],
+          color: Theme.of(context).colorScheme.secondary,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -40,10 +40,10 @@ class JobCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                     child: Container(
                       padding: const EdgeInsets.all(8),
-                      color: Colors.grey[500],
-                      child: const Text(
+                      color: Theme.of(context).colorScheme.primary,
+                      child:  Text(
                         'Part time',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
                       ),
                     ),
                   )

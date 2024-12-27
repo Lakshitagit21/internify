@@ -20,8 +20,8 @@ class RecentJobCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.grey[200],
-          border: Border.all(color: Colors.white),
+          color: Theme.of(context).colorScheme.secondary,
+          border: Border.all(color: Theme.of(context).colorScheme.tertiary),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -34,7 +34,7 @@ class RecentJobCard extends StatelessWidget {
                   child: Container(
                     height: 40,
                     padding: const EdgeInsets.all(6),
-                    color: Colors.grey[300],
+                    color: Theme.of(context).colorScheme.surface,
                     child: Image.asset(logo),
                   ),
                 ),
@@ -54,7 +54,7 @@ class RecentJobCard extends StatelessWidget {
                     Text(
                       companyName,
                       style: TextStyle(
-                        color: Colors.grey[600],
+                        color: Theme.of(context).colorScheme.inversePrimary,
                       ),
                     ),
                   ],
