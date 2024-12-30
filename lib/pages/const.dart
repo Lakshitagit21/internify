@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:internify/homepage.dart';
@@ -156,9 +157,13 @@ class _DrawErState extends State<DrawEr> {
                             ),
                             TextButton(
                               child: const Text('Logout'),
-                              onPressed: () {
+                              onPressed: () async {
                                 Navigator.of(context)
                                     .pop(); // Close the alert dialog
+
+                                // Perform Firebase logout
+                                await FirebaseAuth.instance.signOut();
+
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => const LogOut()));
                               },

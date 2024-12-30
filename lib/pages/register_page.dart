@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:internify/pages/logout.dart';
 
@@ -7,10 +8,43 @@ class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _LogOutState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LogOutState extends State<RegisterPage> {
+class _RegisterPageState extends State<RegisterPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
+  // Sign Up method
+  Future<void> _signUp() async {
+    if (_passwordController.text.trim() != _confirmPasswordController.text.trim()) {
+      _showMessage('Passwords do not match!');
+      return;
+    }
+    try {
+      await _auth.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } on FirebaseAuthException catch (e) {
+      _showMessage(e.message ?? 'An error occurred');
+    }
+  }
+
+  // Show a message using Snackbar
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,8 +86,9 @@ class _LogOutState extends State<RegisterPage> {
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.white),
                     ),
-                    child: const TextField(
-                      decoration: InputDecoration(
+                    child:  TextField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.all(10.0),
                         hintText: 'Email',
@@ -72,8 +107,9 @@ class _LogOutState extends State<RegisterPage> {
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.white),
                     ),
-                    child: const TextField(
-                      decoration: InputDecoration(
+                    child: TextField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.all(10.0),
                         hintText: 'Password',
@@ -92,8 +128,9 @@ class _LogOutState extends State<RegisterPage> {
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.white),
                     ),
-                    child: const TextField(
-                      decoration: InputDecoration(
+                    child: TextField(
+                      controller: _confirmPasswordController,
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.all(10.0),
                         hintText: ' Confirm Password',
@@ -105,13 +142,7 @@ class _LogOutState extends State<RegisterPage> {
                 const SizedBox(height: 25),
                 //sign in
                 GestureDetector(
-                  onTap: () {
-                    // Navigate to homepage after Sign In
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
-                  },
+                  onTap: _signUp,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
                     child: Container(

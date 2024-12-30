@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:internify/pages/register_page.dart';
 
@@ -11,6 +13,44 @@ class LogOut extends StatefulWidget {
 }
 
 class _LogOutState extends State<LogOut> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  // Method to handle sign in with email and password
+  Future<void> _signIn() async {
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      // Navigate to HomePage if successful
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } catch (e) {
+      // Handle error
+      showCupertinoDialog(
+        context: context,
+        builder: (context) => CupertinoAlertDialog(
+          title: const Text('Error'),
+          content: Text('Failed to sign in: ${e.toString()}'),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the alert dialog
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,8 +92,9 @@ class _LogOutState extends State<LogOut> {
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.white),
                     ),
-                    child: const TextField(
-                      decoration: InputDecoration(
+                    child: TextField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.all(10.0),
                         hintText: 'Email',
@@ -72,8 +113,9 @@ class _LogOutState extends State<LogOut> {
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.white),
                     ),
-                    child: const TextField(
-                      decoration: InputDecoration(
+                    child: TextField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.all(10.0),
                         hintText: 'Password',
@@ -104,13 +146,7 @@ class _LogOutState extends State<LogOut> {
                 const SizedBox(height: 25),
                 //sign in
                 GestureDetector(
-                  onTap: () {
-                    // Navigate to homepage after Sign In
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
-                  },
+                  onTap: _signIn,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
                     child: Container(
