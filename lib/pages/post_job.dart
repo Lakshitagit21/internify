@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -19,6 +21,82 @@ class _PostJobPageState extends State<PostJobPage> {
   final TextEditingController _skillsController = TextEditingController();
   File? _image; // Store the selected image file
   final ImagePicker _picker = ImagePicker();
+
+  bool _isLoading = false;
+
+  Future<void> _postJob() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('You must be logged in to post a job.')),
+      );
+      return;
+    }
+
+    if (_jobTitleController.text.isEmpty ||
+        _companyNameController.text.isEmpty ||
+        _locationController.text.isEmpty ||
+        _jobDescriptionController.text.isEmpty ||
+        _salaryController.text.isEmpty ||
+        _skillsController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill in all fields.')),
+      );
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final jobData = {
+        'jobTitle': _jobTitleController.text.trim(),
+        'companyName': _companyNameController.text.trim(),
+        'location': _locationController.text.trim(),
+        'jobDescription': _jobDescriptionController.text.trim(),
+        'salary': _salaryController.text.trim(),
+        'skills': _skillsController.text.trim().split(','),
+        'postedBy': currentUser.uid,
+        'postedAt': FieldValue.serverTimestamp(),
+      };
+
+      await FirebaseFirestore.instance.collection('jobs').add(jobData);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Job posted successfully!')),
+      );
+
+      // Clear the fields
+      _jobTitleController.clear();
+      _companyNameController.clear();
+      _locationController.clear();
+      _jobDescriptionController.clear();
+      _salaryController.clear();
+      _skillsController.clear();
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to post job: $e')),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _jobTitleController.dispose();
+    _companyNameController.dispose();
+    _locationController.dispose();
+    _jobDescriptionController.dispose();
+    _salaryController.dispose();
+    _skillsController.dispose();
+    super.dispose();
+  }
+
 
   Future<void> _pickImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
@@ -53,9 +131,7 @@ class _PostJobPageState extends State<PostJobPage> {
               Icons.save,
               color: Theme.of(context).colorScheme.inversePrimary,
             ),
-            onPressed: () {
-              // Save logic here
-            },
+            onPressed: _isLoading ? null : _postJob,
           ),
         ],
       ),
@@ -139,9 +215,7 @@ class _PostJobPageState extends State<PostJobPage> {
             // Save Button
             Center(
               child: ElevatedButton(
-                onPressed: () {
-                  // Save logic here
-                },
+                onPressed: _isLoading ? null : _postJob,
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 40, vertical: 15),
@@ -149,7 +223,9 @@ class _PostJobPageState extends State<PostJobPage> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
+                child: _isLoading
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : const Text(
                   'Post Job',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),

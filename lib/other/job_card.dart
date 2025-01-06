@@ -16,6 +16,7 @@ class JobCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    String logoText = jobTitle.isNotEmpty ? jobTitle[0] : "J";
     return Padding(
       padding: const EdgeInsets.only(left: 25.0),
     child: GestureDetector(

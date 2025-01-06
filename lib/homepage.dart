@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:internify/pages/const.dart';
 import 'package:internify/pages/post_job.dart';
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
         iconTheme:  IconThemeData(color: Theme.of(context).colorScheme.inversePrimary, size: 35.0),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 8.0),
+            padding: const EdgeInsets.only(right: 4.0),
             child: IconButton(
               icon: Icon(
                 Icons.add, // Plus icon
@@ -49,6 +50,18 @@ class _HomePageState extends State<HomePage> {
                     context,
                     MaterialPageRoute(builder: (context) => const PostJobPage()),
                   );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: IconButton(
+              icon: Icon(
+                Icons.chat,
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
+              iconSize: 30.0,
+              onPressed: () {
               },
             ),
           ),
@@ -88,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                       child: const TextField(
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Search for an internship..',
+                          hintText: 'Search for an opportunity..',
                           prefixIcon: Icon(Icons.search),
                         ),
                       ),

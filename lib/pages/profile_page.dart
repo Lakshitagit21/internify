@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -21,6 +23,39 @@ class _UserProfilePageState extends State<UserProfilePage> {
   File? _image; // Store the selected image file
   final ImagePicker _picker = ImagePicker();
 
+  final User? _currentUser = FirebaseAuth.instance.currentUser;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+
+  Future<void> _loadProfileData() async {
+    try {
+      final User? currentUser = _auth.currentUser;
+      if (currentUser != null) {
+        final DocumentSnapshot userProfile = await _firestore
+            .collection('users')
+            .doc(currentUser.uid)
+            .get();
+
+        if (userProfile.exists) {
+          final data = userProfile.data() as Map<String, dynamic>;
+          _nameController.text = data['name'] ?? '';
+          _genderController.text = data['gender'] ?? '';
+          _designationController.text = data['designation'] ?? '';
+          _resumeUrlController.text = data['resumeUrl'] ?? '';
+          _contactController.text = data['contact'] ?? '';
+          _emailController.text = currentUser.email ?? '';
+          if (data['skills'] is List) {
+            _skillsController.text = (data['skills'] as List).join(', ');
+          }
+        }
+      }
+    } catch (e) {
+      print('Error loading profile data: $e');
+    }
+  }
+
+
   Future<void> _pickImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
@@ -31,6 +66,62 @@ class _UserProfilePageState extends State<UserProfilePage> {
         print('No image selected.');
       }
     });
+  }
+  Future<void> _saveProfile() async {
+
+    if (_nameController.text.isEmpty ||
+        _genderController.text.isEmpty ||
+        _designationController.text.isEmpty ||
+        _resumeUrlController.text.isEmpty ||
+        _contactController.text.isEmpty ||
+        _skillsController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please fill out all fields!")),
+      );
+      return;
+    }
+
+    if (_currentUser == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("User not logged in!")),
+      );
+      return;
+    }
+
+    try {
+      final profileData = {
+        'name': _nameController.text,
+        'gender': _genderController.text,
+        'designation': _designationController.text,
+        'resumeUrl': _resumeUrlController.text,
+        'contact': _contactController.text,
+        'email': _currentUser!.email,
+        'skills': _skillsController.text.split(','),
+      };
+
+      // Save data to Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(_currentUser!.uid)
+          .set(profileData);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Profile saved successfully!")),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to save profile: $e")),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileData();
+    if (_currentUser != null) {
+      _emailController.text = _currentUser!.email!;
+    }
   }
 
   @override
@@ -50,9 +141,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               Icons.save,
               color: Theme.of(context).colorScheme.inversePrimary,
             ),
-            onPressed: () {
-              // Save logic here
-            },
+            onPressed: _saveProfile,
           ),
         ],
       ),
@@ -134,6 +223,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
               controller: _emailController,
               label: 'Email',
               icon: Icons.email,
+              readOnly: true,
             ),
             const SizedBox(height: 20),
             // Skills
@@ -146,9 +236,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             // Save Button
             Center(
               child: ElevatedButton(
-                onPressed: () {
-                  // Save logic here
-                },
+                onPressed: _saveProfile,
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 40, vertical: 15),

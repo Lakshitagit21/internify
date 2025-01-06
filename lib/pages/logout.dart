@@ -51,6 +51,48 @@ class _LogOutState extends State<LogOut> {
     }
   }
 
+  // Method to send password reset email
+  Future<void> _sendPasswordResetEmail() async {
+    try {
+      await _auth.sendPasswordResetEmail(email: _emailController.text);
+
+      // Show success message
+      showCupertinoDialog(
+        context: context,
+        builder: (context) => CupertinoAlertDialog(
+          title: const Text('Success'),
+          content: const Text('A password reset email has been sent to your email address.'),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the alert dialog
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } catch (e) {
+      // Show error message
+      showCupertinoDialog(
+        context: context,
+        builder: (context) => CupertinoAlertDialog(
+          title: const Text('Error'),
+          content: Text('Failed to send reset email: ${e.toString()}'),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the alert dialog
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,19 +169,22 @@ class _LogOutState extends State<LogOut> {
                 const SizedBox(height: 10),
             
                 //forgot password
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Forgot Password?',
-                        style: TextStyle(
-                          color: Color.fromRGBO(97, 97, 97, 1),
-                          fontSize: 16,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: GestureDetector(
+                    onTap: _sendPasswordResetEmail, // Trigger password reset
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                            color: Color.fromRGBO(97, 97, 97, 1),
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
             
